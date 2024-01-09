@@ -25,6 +25,7 @@ export default component$(() => {
         <ServiceWorkerRegister />
       </head>
       <body lang="en">
+        <script src="../../node_modules/preline/preline.js"></script>
         <RouterOutlet />
       </body>
     </QwikCityProvider>

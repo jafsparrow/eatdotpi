@@ -3,7 +3,6 @@ import { routeLoader$ } from "@builder.io/qwik-city";
 import type { RequestHandler } from "@builder.io/qwik-city";
 
 import Header from "~/components/starter/header/header";
-import Footer from "~/components/starter/footer/footer";
 
 import styles from "./styles.css?inline";
 
@@ -27,12 +26,12 @@ export const useServerTimeLoader = routeLoader$(() => {
 export default component$(() => {
   useStyles$(styles);
   return (
-    <>
+    <div class=" bg-gray-100">
       <Header />
       <main>
         <Slot />
       </main>
-      <Footer />
-    </>
+      {/* <Footer /> */}
+    </div>
   );
 });
