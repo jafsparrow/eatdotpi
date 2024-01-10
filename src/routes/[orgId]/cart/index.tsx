@@ -1,11 +1,18 @@
 import { component$, useContext } from "@builder.io/qwik";
-import { Cart, CartContext } from "../layout";
-import { JSONObject, routeAction$ } from "@builder.io/qwik-city";
+import type { Cart } from "../layout";
+import { CartContext } from "../layout";
+import type { JSONObject } from "@builder.io/qwik-city";
+import { routeAction$ } from "@builder.io/qwik-city";
 import { PrismaClient } from "@prisma/client";
 
 export const useCreateOrderAction = routeAction$(
-  async (cart: JSONObject, { redirect, params }) => {
+  async (cart: JSONObject, { redirect, params, fail }) => {
     const orgId = params.orgId;
+    if (!orgId) {
+      return fail(500, {
+        message: "Organisation Id could not be read..!",
+      });
+    }
     const prisma = new PrismaClient();
     const cartItems = (cart as unknown as Cart).cartItems;
     const cartTotal = cartItems.reduce((prev, item) => prev + item.amount, 0);
@@ -25,6 +32,7 @@ export const useCreateOrderAction = routeAction$(
         amount: cartTotal,
         status: "NEW",
         cartItems: mappedCartItem,
+        orgId,
       },
     });
 
