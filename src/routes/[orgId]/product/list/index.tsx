@@ -15,6 +15,7 @@ import HomeCarousal from "~/components/promotion/HomeCarousal";
 import { Company } from "~/types/company_typs";
 import { CartContext } from "../../layout";
 import { PrismaClient } from "@prisma/client";
+import { db } from "~/lib/prima.client";
 
 export const useCompanyDetails = routeLoader$<Company>((requestEvent) => {
   const company: Company = {
@@ -29,9 +30,8 @@ export const useCompanyDetails = routeLoader$<Company>((requestEvent) => {
 export const useProductLists = routeLoader$(async ({ params, error }) => {
   const orgId = params.orgId;
 
-  const prisma = new PrismaClient();
   console.log("getting rpoduct");
-  const products = await prisma.product.findMany({
+  const products = await db.product.findMany({
     where: {
       orgId,
     },

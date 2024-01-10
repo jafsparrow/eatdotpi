@@ -4,6 +4,7 @@ import { CartContext } from "../layout";
 import type { JSONObject } from "@builder.io/qwik-city";
 import { routeAction$ } from "@builder.io/qwik-city";
 import { PrismaClient } from "@prisma/client";
+import twil from "twilio";
 
 export const useCreateOrderAction = routeAction$(
   async (cart: JSONObject, { redirect, params, fail }) => {
@@ -37,6 +38,20 @@ export const useCreateOrderAction = routeAction$(
     });
 
     if (createdOrder) {
+      const accountSid = "AC9b2395f1f5c188d71c53dc488067b951";
+      const authToken = "9ffffa20ddc88e1343c76f1ea971a99c";
+      const client = twil(accountSid, authToken);
+
+      const response = await client.messages.create({
+        body: `Thank you...
+        *******************
+        https://wa.me/+96879423170
+        ***********
+        `,
+        from: "whatsapp:+14155238886",
+        to: "whatsapp:+919847564740",
+      });
+      console.log(response.body);
       throw redirect(302, `/${orgId}/product/list`);
     }
 

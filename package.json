@@ -54,6 +54,7 @@
     "@qwikest/icons": "^0.0.13",
     "preline": "^2.0.3",
     "sharp": "^0.33.1",
+    "twilio": "^5.0.0-rc.1",
     "valibot": "^0.25.0"
   }
 }
