@@ -1,12 +1,46 @@
-import { component$, useSignal } from "@builder.io/qwik";
+import {
+  component$,
+  useSignal,
+  $,
+  useStore,
+  useContext,
+} from "@builder.io/qwik";
+import { Link, routeLoader$ } from "@builder.io/qwik-city";
 import { LuShoppingCart } from "@qwikest/icons/lucide";
+import CartIcon from "~/components/cart/CartIcon";
 import ProductDetailsModal from "~/components/modal/ProductDetailsModal";
+import CategoryTitle from "~/components/product/CategoryTitle";
 import ProductCard from "~/components/product/ProductCard";
 import HomeCarousal from "~/components/promotion/HomeCarousal";
+import { Company } from "~/types/company_typs";
+import { products } from "~/utils/data/seed";
+import { CartContext } from "./layout";
+
+export const useCompanyDetails = routeLoader$<Company>((requestEvent) => {
+  const company: Company = {
+    name: "Dawar zadna",
+    currencyCode: "OMR",
+    charges: [{ isPercentage: true, title: "VAT 5%", value: 5 }],
+    decimalPlaces: 3,
+    license: "hello",
+  };
+});
 
 export default component$(() => {
-  const products = useSignal([1, 2, 3, 4, 5]);
+  const company = useCompanyDetails();
   const showSheet = useSignal(false);
+  const showModal = useSignal(false);
+  const showProductSelectionModal = useSignal(true);
+  const cartContext = useContext(CartContext);
+
+  const handleSome$ = $(() => {
+    console.log("hello");
+    showModal.value = false;
+  });
+
+  const handleAddToCart = $(() => {
+    showProductSelectionModal.value = true;
+  });
   return (
     <div>
       <div class="mx-auto max-w-lg p-2 text-center">
@@ -16,46 +50,22 @@ export default component$(() => {
           placeholder="Search product here"
         />
       </div>
-
-      <ProductDetailsModal />
+      <div>{JSON.stringify(cartContext)}</div>
+      <ProductDetailsModal showProductModal={showProductSelectionModal} />
       <HomeCarousal />
 
-      <div>
-        <button onClick$={() => (showSheet.value = !showSheet.value)}>
-          show
-        </button>
-      </div>
       <div class="divide-y">
         <div class="mb-6 ">
-          <div>
-            <h2 class=" mb-2 px-2 text-xl font-bold">Juice</h2>
-          </div>
+          <CategoryTitle title="Biriryani" />
 
           <div class="grid gap-4 px-2  sm:grid-cols-2  lg:grid-cols-3 lg:gap-4 ">
-            {products.value.map((val, index) => (
-              <ProductCard key={index} />
-            ))}
-          </div>
-        </div>
-        <div class="mb-6 pt-3 ">
-          <div>
-            <h2 class=" mb-2 px-2 text-xl font-bold">Juice</h2>
-          </div>
-
-          <div class="grid gap-4 px-2  sm:grid-cols-2  lg:grid-cols-3 lg:gap-4 ">
-            {products.value.map((val, index) => (
-              <ProductCard key={index} />
-            ))}
-          </div>
-        </div>
-        <div class="mb-6 pt-3  ">
-          <div>
-            <h2 class=" mb-2 px-2 text-xl font-bold">Juice</h2>
-          </div>
-
-          <div class="grid gap-4 px-2  sm:grid-cols-2  lg:grid-cols-3 lg:gap-4 ">
-            {products.value.map((val, index) => (
-              <ProductCard key={index} />
+            {products.map((val, index) => (
+              <ProductCard
+                onAddToCart={handleAddToCart}
+                product={val}
+                onSelect={handleAddToCart}
+                key={index}
+              />
             ))}
           </div>
         </div>
@@ -83,9 +93,12 @@ export default component$(() => {
         </button>
       )}
 
-      <div class="fixed right-1 top-2 h-8 w-8 bg-blue-800 text-white">
-        <LuShoppingCart height="16" width="16" />
-      </div>
+      <Link href={"cart"}>
+        <div class="fixed right-1 top-2 h-8 w-8 bg-blue-800 text-white">
+          <LuShoppingCart height="16" width="16" />
+          <CartIcon />
+        </div>
+      </Link>
     </div>
   );
 });

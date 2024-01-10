@@ -24,7 +24,7 @@ import {
   string,
 } from "valibot";
 
-const ProductSchema = object({
+export const ProductSchema = object({
   name: string([minLength(1, "Please enter Product Name")]),
   code: number([integer("Please enter a number")]),
   price: number(),
@@ -45,7 +45,7 @@ const ProductSchema = object({
   ),
 });
 
-type ProductAddFrom = Input<typeof ProductSchema>;
+export type ProductAddFrom = Input<typeof ProductSchema>;
 
 export const useFormAction = formAction$<ProductAddFrom>(
   (values) => {
