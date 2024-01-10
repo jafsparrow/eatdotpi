@@ -14,7 +14,7 @@ import ProductCard from "~/components/product/ProductCard";
 import HomeCarousal from "~/components/promotion/HomeCarousal";
 import { Company } from "~/types/company_typs";
 import { products } from "~/utils/data/seed";
-import { CartContext } from "./layout";
+import { CartContext } from "../../layout";
 
 export const useCompanyDetails = routeLoader$<Company>((requestEvent) => {
   const company: Company = {
@@ -93,7 +93,7 @@ export default component$(() => {
         </button>
       )}
 
-      <Link href={"cart"}>
+      <Link href={"../../cart"}>
         <div class="fixed right-1 top-2 h-8 w-8 bg-blue-800 text-white">
           <LuShoppingCart height="16" width="16" />
           <CartIcon />

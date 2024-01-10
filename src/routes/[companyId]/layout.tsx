@@ -1,10 +1,4 @@
-import {
-  Slot,
-  component$,
-  createContextId,
-  useContextProvider,
-  useStore,
-} from "@builder.io/qwik";
+import { Slot, component$, createContextId, useContextProvider, useStore } from "@builder.io/qwik";
 import { CartItem } from "~/types/cart_types";
 import { Product } from "~/types/product_types";
 
@@ -18,6 +12,7 @@ export const SelectedProductContext = createContextId<{ product: Product }>(
 );
 
 export default component$(() => {
+
   const cart = useStore({
     cartItems: [],
   });
@@ -34,5 +29,6 @@ export default component$(() => {
     },
   });
   useContextProvider(SelectedProductContext, selectedProduct);
+ 
   return <Slot />;
 });

@@ -1,5 +1,5 @@
 import { component$, useContext } from "@builder.io/qwik";
-import { CartContext } from "~/routes/product/list/layout";
+import { CartContext } from "~/routes/[companyId]/layout";
 
 export default component$(() => {
   const cartContext = useContext(CartContext);

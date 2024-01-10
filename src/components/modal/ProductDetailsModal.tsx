@@ -13,7 +13,8 @@ import type { CartItem } from "~/types/cart_types";
 import {
   CartContext,
   SelectedProductContext,
-} from "~/routes/product/list/layout";
+} from "~/routes/[companyId]/layout";
+
 export type ShowProductModalProps = {
   showProductModal: Signal<boolean>;
 };

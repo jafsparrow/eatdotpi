@@ -13,7 +13,6 @@ export default component$(() => {
   }
   return (
     <div>
-      hello from cart
       <div>{JSON.stringify(cart)}</div>
       <div class="font-bold">Cart </div>
       {cart.cartItems.map((item, index) => (
