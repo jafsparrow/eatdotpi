@@ -6,12 +6,75 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = "file:./dev.db"
+  provider = "mongodb"
+  url      = "mongodb+srv://jafar:12345@cluster0.y7xyc.mongodb.net/eatdotpi?retryWrites=true"
+}
+
+model Organisation {
+  id           String    @id @default(auto()) @map("_id") @db.ObjectId
+  name         String
+  currencyCode String
+  Product      Product[]
 }
 
 model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  name     String
+  phone    String
+  username String
+  password String
+}
+
+// model Customer {
+//   id    String @id @default(auto()) @map("_id") @db.ObjectId
+//   name  String
+//   phone String
+// }
+
+model Product {
+  id           String       @id @default(auto()) @map("_id") @db.ObjectId
+  code         String       @unique
+  name         String
+  price        Int
+  orgId        String       @db.ObjectId
+  organisation Organisation @relation(fields: [orgId], references: [id])
+  modifiers    Modifier[]
+}
+
+model Order {
+  id        String     @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt DateTime   @default(now())
+  customer  Customer
+  cartItems CartItem[]
+  amount    Int
+  status    Status
+}
+
+type CartItem {
+  name      String
+  amount    Int
+  count     Int
+  modifiers String[]
+}
+
+type Modifier {
+  name             String
+  shouldBeSelected Boolean
+  items            ModifierItem[]
+}
+
+type ModifierItem {
+  title     String
+  price     Int
+  isDefault Boolean
+}
+
+type Customer {
+  name  String
+  phone String
+}
+
+enum Status {
+  NEW
+  DONE
 }

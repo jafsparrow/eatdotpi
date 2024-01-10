@@ -13,8 +13,8 @@ import CategoryTitle from "~/components/product/CategoryTitle";
 import ProductCard from "~/components/product/ProductCard";
 import HomeCarousal from "~/components/promotion/HomeCarousal";
 import { Company } from "~/types/company_typs";
-import { products } from "~/utils/data/seed";
 import { CartContext } from "../../layout";
+import { PrismaClient } from "@prisma/client";
 
 export const useCompanyDetails = routeLoader$<Company>((requestEvent) => {
   const company: Company = {
@@ -26,8 +26,39 @@ export const useCompanyDetails = routeLoader$<Company>((requestEvent) => {
   };
 });
 
+export const useProductLists = routeLoader$(async ({ params, error }) => {
+  const orgId = params.orgId;
+
+  const prisma = new PrismaClient();
+  console.log("getting rpoduct");
+  const products = await prisma.product.findMany({
+    where: {
+      orgId,
+    },
+  });
+
+  return products;
+});
+
+export const useOrganisation = routeLoader$(async ({ params, error }) => {
+  const prisma = new PrismaClient();
+  console.log(params);
+  const organisation = await prisma.organisation.findUnique({
+    where: {
+      id: params.orgId,
+    },
+  });
+
+  if (!organisation) {
+    throw error(404, "Contact not found");
+  }
+  return organisation;
+});
+
 export default component$(() => {
   const company = useCompanyDetails();
+  const organisation = useOrganisation();
+  const products = useProductLists();
   const showSheet = useSignal(false);
   const showModal = useSignal(false);
   const showProductSelectionModal = useSignal(true);
@@ -50,7 +81,8 @@ export default component$(() => {
           placeholder="Search product here"
         />
       </div>
-      <div>{JSON.stringify(cartContext)}</div>
+
+      <div>{JSON.stringify(organisation.value)}</div>
       <ProductDetailsModal showProductModal={showProductSelectionModal} />
       <HomeCarousal />
 
@@ -59,7 +91,7 @@ export default component$(() => {
           <CategoryTitle title="Biriryani" />
 
           <div class="grid gap-4 px-2  sm:grid-cols-2  lg:grid-cols-3 lg:gap-4 ">
-            {products.map((val, index) => (
+            {products.value.map((val, index) => (
               <ProductCard
                 onAddToCart={handleAddToCart}
                 product={val}

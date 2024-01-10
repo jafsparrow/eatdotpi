@@ -1,5 +1,5 @@
 import { PropFunction, component$, $, QRL, useContext } from "@builder.io/qwik";
-import { SelectedProductContext } from "~/routes/[companyId]/layout";
+import { SelectedProductContext } from "~/routes/[orgId]/layout";
 import { Product } from "~/types/product_types";
 type ProductCardProps = {
   product: Product;

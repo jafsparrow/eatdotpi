@@ -9,7 +9,9 @@ import {
   useForm,
   valiForm$,
 } from "@modular-forms/qwik";
+import { PrismaClient } from "@prisma/client";
 import { LuPlusCircle } from "@qwikest/icons/lucide";
+import { create } from "domain";
 import {
   Input,
   array,
@@ -48,9 +50,20 @@ export const ProductSchema = object({
 export type ProductAddFrom = Input<typeof ProductSchema>;
 
 export const useFormAction = formAction$<ProductAddFrom>(
-  (values) => {
+  async (values) => {
     // Runs on server
     console.log(JSON.stringify(values));
+    const prisma = new PrismaClient();
+    const product = await prisma.product.create({
+      data: {
+        name: values.name,
+        code: values.code.toString(),
+        price: values.price,
+        modifiers: values.modifiers,
+        orgId: "659e7a40169733634d0c6c1b",
+      },
+    });
+    console.log(product);
   },
   {
     validate: valiForm$(ProductSchema),
