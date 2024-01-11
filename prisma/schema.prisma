@@ -96,7 +96,7 @@ type CartItem {
 type ModifierGroup {
   description      String
   shouldBeSelected Boolean
-  items            ModifierItem[]
+  items            Modifier[]
 }
 
 type Modifier {

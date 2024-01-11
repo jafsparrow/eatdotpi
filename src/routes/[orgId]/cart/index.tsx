@@ -42,16 +42,16 @@ export const useCreateOrderAction = routeAction$(
       const authToken = "9ffffa20ddc88e1343c76f1ea971a99c";
       const client = twil(accountSid, authToken);
 
-      const response = await client.messages.create({
-        body: `Thank you...
-        *******************
-        https://wa.me/+96879423170
-        ***********
-        `,
-        from: "whatsapp:+14155238886",
-        to: "whatsapp:+919847564740",
-      });
-      console.log(response.body);
+      // const response = await client.messages.create({
+      //   body: `Thank you...
+      //   *******************
+      //   https://wa.me/+96879423170
+      //   ***********
+      //   `,
+      //   from: "whatsapp:+14155238886",
+      //   to: "whatsapp:+919847564740",
+      // });
+      // console.log(response.body);
       throw redirect(302, `/${orgId}/product/list`);
     }
 
