@@ -11,11 +11,12 @@ datasource db {
 }
 
 model Organisation {
-  id           String    @id @default(auto()) @map("_id") @db.ObjectId
+  id           String     @id @default(auto()) @map("_id") @db.ObjectId
   name         String
   currencyCode String
   Products     Product[]
   Orders       Order[]
+  Category     Category[]
 }
 
 model User {
@@ -31,16 +32,48 @@ model User {
 //   name  String
 //   phone String
 // }
-
-model Product {
+model Category {
   id           String       @id @default(auto()) @map("_id") @db.ObjectId
-  code         String       @unique
   name         String
+  description  String       @default("Delicious and Tasty")
+  products     Product[]
   price        Int
   orgId        String       @db.ObjectId
   organisation Organisation @relation(fields: [orgId], references: [id])
-  modifiers    Modifier[]
+  sortIndex    Int          @default(1)
 }
+
+type ProductImage {
+  storageName String
+  downloadUrl String
+}
+
+type Product {
+  name                  String
+  secondaryLanguageName String?
+  description           String
+  price                 Float
+  image                 ProductImage[]
+  inStock               Boolean         @default(true)
+  videoUrl              String?
+  popular               Boolean         @default(false)
+  printName             String?
+  modifierGroups        ModifierGroup[]
+  indexInCategory       Int
+  code                  Int             @default(1)
+}
+
+// model Product {
+//   id           String       @id @default(auto()) @map("_id") @db.ObjectId
+//   code         String       @unique
+//   name         String
+//   price        Int
+//   orgId        String       @db.ObjectId
+//   organisation Organisation @relation(fields: [orgId], references: [id])
+//   modifiers    Modifier[]
+//   Category     Category?    @relation(fields: [categoryId], references: [id])
+//   categoryId   String?      @db.ObjectId
+// }
 
 model Order {
   id           String        @id @default(auto()) @map("_id") @db.ObjectId
@@ -60,13 +93,13 @@ type CartItem {
   modifiers String[]
 }
 
-type Modifier {
-  name             String
+type ModifierGroup {
+  description      String
   shouldBeSelected Boolean
   items            ModifierItem[]
 }
 
-type ModifierItem {
+type Modifier {
   title     String
   price     Int
   isDefault Boolean
