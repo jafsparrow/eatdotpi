@@ -9,6 +9,7 @@ import type { Company } from "~/types/company_typs";
 import { PrismaClient } from "@prisma/client";
 import { CartContext } from "../layout";
 import { products } from "~/utils/data/seed";
+import { db } from "~/lib/prima.client";
 
 export const useCompanyDetails = routeLoader$<Company>((requestEvent) => {
   const company: Company = {
@@ -22,18 +23,20 @@ export const useCompanyDetails = routeLoader$<Company>((requestEvent) => {
   return company;
 });
 
-export const useProductLists = routeLoader$(async ({ params, error }) => {
-  const orgId = params.orgId;
+export const useCategoryViceProducts = routeLoader$(
+  async ({ params, error }) => {
+    const orgId = params.orgId;
+    // if (!orgId) {
+    //   return error(404, "Organisation Id is not recognised.");
+    // }
+    console.log("getting rpoduct");
+    const categoryViceProduct = await db.category.findMany({
+      where: { orgId },
+    });
 
-  console.log("getting rpoduct");
-  // const products = await db.product.findMany({
-  //   where: {
-  //     orgId,
-  //   },
-  // });
-
-  return products;
-});
+    return categoryViceProduct;
+  },
+);
 
 // export const useOrganisation = routeLoader$(async ({ params, error }) => {
 //   const prisma = new PrismaClient();
@@ -51,13 +54,11 @@ export const useProductLists = routeLoader$(async ({ params, error }) => {
 // });
 
 export default component$(() => {
-  const company = useCompanyDetails();
-  //   const organisation = useOrganisation();
-  const products = useProductLists();
+  const categoryViceProducts = useCategoryViceProducts();
+  const cartContext = useContext(CartContext);
   const showSheet = useSignal(false);
   const showModal = useSignal(false);
-  const showProductSelectionModal = useSignal(true);
-  const cartContext = useContext(CartContext);
+  const showProductSelectionModal = useSignal(false);
 
   const handleSome$ = $(() => {
     console.log("hello");
@@ -80,22 +81,24 @@ export default component$(() => {
       <ProductDetailsModal showProductModal={showProductSelectionModal} />
 
       <div class="divide-y">
-        <div class="mb-6">
-          <div class="mb-2">
-            <CategoryTitle title="Biriryani" />
-          </div>
+        {categoryViceProducts.value.map((category, index) => (
+          <div key={index} class="mb-6">
+            <div class="mb-2" id={category.id}>
+              <CategoryTitle title={category.name} />
+            </div>
 
-          <div class="mt-2 grid gap-4 sm:grid-cols-2  lg:grid-cols-3 lg:gap-4 ">
-            {products.value.map((val, index) => (
-              <ProductCard
-                onAddToCart={handleAddToCart}
-                product={val}
-                onSelect={handleAddToCart}
-                key={index}
-              />
-            ))}
+            <div class="mt-2 grid gap-4 sm:grid-cols-2  lg:grid-cols-3 lg:gap-4 ">
+              {category.products.map((val, index) => (
+                <ProductCard
+                  onAddToCart={handleAddToCart}
+                  product={val}
+                  onSelect={handleAddToCart}
+                  key={index}
+                />
+              ))}
+            </div>
           </div>
-        </div>
+        ))}
       </div>
 
       <div
@@ -103,12 +106,17 @@ export default component$(() => {
           showSheet.value ? "scale-100" : "scale-0"
         }`}
       >
-        <div onClick$={() => (showSheet.value = !showSheet.value)}>First</div>
-        <div>First</div>
-        <div>First</div>
-        <div>First</div>
-        <div>First</div>
-        <div>First</div>
+        {categoryViceProducts.value.map((category, index) => {
+          return (
+            <div
+              key={index}
+              onClick$={() => (showSheet.value = !showSheet.value)}
+              class="py-2 hover:bg-gray-300"
+            >
+              <a href={`#${category.id}`}>{category.name}</a>
+            </div>
+          );
+        })}
       </div>
 
       {!showSheet.value && (

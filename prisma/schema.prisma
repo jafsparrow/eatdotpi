@@ -37,7 +37,6 @@ model Category {
   name         String
   description  String       @default("Delicious and Tasty")
   products     Product[]
-  price        Int
   orgId        String       @db.ObjectId
   organisation Organisation @relation(fields: [orgId], references: [id])
   sortIndex    Int          @default(1)
@@ -61,6 +60,7 @@ type Product {
   modifierGroups        ModifierGroup[]
   indexInCategory       Int
   code                  Int             @default(1)
+  createdAt             DateTime        @default(now())
 }
 
 // model Product {
@@ -101,7 +101,7 @@ type ModifierGroup {
 
 type Modifier {
   title     String
-  price     Int
+  price     Float
   isDefault Boolean
 }
 

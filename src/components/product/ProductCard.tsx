@@ -2,7 +2,7 @@ import { PropFunction, component$, $, QRL, useContext } from "@builder.io/qwik";
 import { SelectedProductContext } from "~/routes/[orgId]/layout";
 import { Product } from "~/types/product_types";
 type ProductCardProps = {
-  product: Product;
+  product: any;
   onSelect: QRL<() => void>;
   onAddToCart: QRL<() => void>;
 };
