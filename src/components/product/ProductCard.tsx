@@ -1,8 +1,9 @@
-import { PropFunction, component$, $, QRL, useContext } from "@builder.io/qwik";
+import type { QRL } from "@builder.io/qwik";
+import { PropFunction, component$, $, useContext } from "@builder.io/qwik";
 import { SelectedProductContext } from "~/routes/[orgId]/layout";
-import { Product } from "~/types/product_types";
+import type { Product } from "~/types/product_types";
 type ProductCardProps = {
-  product: any;
+  product: Product;
   onSelect: QRL<() => void>;
   onAddToCart: QRL<() => void>;
 };
@@ -20,7 +21,8 @@ export default component$<ProductCardProps>(
           <img
             width={28}
             height={40}
-            src="https://images.unsplash.com/photo-1612681621979-fffe5920dbe8?auto=format&q=75&fit=crop&w=200"
+            src={product.image[4].downloadUrl}
+            // src="https://images.unsplash.com/photo-1612681621979-fffe5920dbe8?auto=format&q=75&fit=crop&w=200"
             alt=""
             srcset=""
             class="h-full w-full object-cover object-center duration-200 hover:scale-105"

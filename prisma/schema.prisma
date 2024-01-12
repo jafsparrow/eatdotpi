@@ -42,11 +42,6 @@ model Category {
   sortIndex    Int          @default(1)
 }
 
-type ProductImage {
-  storageName String
-  downloadUrl String
-}
-
 type Product {
   name                  String
   secondaryLanguageName String?
@@ -61,6 +56,11 @@ type Product {
   indexInCategory       Int
   code                  Int             @default(1)
   createdAt             DateTime        @default(now())
+}
+
+type ProductImage {
+  storageName String
+  downloadUrl String
 }
 
 // model Product {

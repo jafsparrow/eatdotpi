@@ -24,34 +24,6 @@ export default component$<ShowProductModalProps>(({ showProductModal }) => {
     count: 1,
     modifiers: {},
   });
-  // const productStore = useStore({
-  //   name: "Chatu",
-  //   price: 10,
-  //   code: 33,
-  //   categoryId: "3",
-  //   description: "BLend of chatu and shit juice mixed with snot syrup",
-  //   modifiers: [
-  //     {
-  //       name: "Size",
-  //       shouldBeSelected: true,
-  //       items: [
-  //         { title: "Small", price: 33, isDefault: true },
-  //         { title: "Medium", price: 60, isDefault: false },
-  //         { title: "Large", price: 80, isDefault: false },
-  //       ],
-  //     },
-  //     {
-  //       name: "Cheese",
-  //       shouldBeSelected: false,
-  //       items: [
-  //         { title: "plane", price: 33, isDefault: false },
-  //         { title: "Think", price: 60, isDefault: false },
-  //         { title: "Supreame", price: 80, isDefault: false },
-  //       ],
-  //     },
-  //   ],
-  // });
-
   const handleAddToCart$ = $(() => {
     cartContext.cartItems.push({ ...cartItem });
     cartItem.name = "";
@@ -65,11 +37,11 @@ export default component$<ShowProductModalProps>(({ showProductModal }) => {
     cartItem.name = trackedProduct.name;
     cartItem.amount = trackedProduct.price;
     cartItem.count = 1;
-    trackedProduct.modifiers.forEach((modifier, index) => {
+    trackedProduct.modifierGroups.forEach((modifier, index) => {
       modifier.items.forEach((mod) => {
         if (mod.isDefault) {
           cartItem.modifiers[index.toString()] = {
-            name: modifier.name,
+            name: modifier.description,
             price: mod.price,
             title: mod.title,
           };
@@ -107,10 +79,10 @@ export default component$<ShowProductModalProps>(({ showProductModal }) => {
     >
       <div q:slot="body">
         <div>{JSON.stringify(cartItem)}</div>
-        {product.modifiers.map((item, index) => (
+        {product.modifierGroups.map((item, index) => (
           <div key={index}>
             <section class="flex justify-between border-b">
-              <div class="font-semibold">{item.name}</div>
+              <div class="font-semibold">{item.description}</div>
               <div>
                 {item.shouldBeSelected ? (
                   "required"
@@ -138,7 +110,7 @@ export default component$<ShowProductModalProps>(({ showProductModal }) => {
                 onClick$={() => {
                   const key = index.toString();
                   cartItem.modifiers[key] = {
-                    name: item.name,
+                    name: item.description,
                     price: mod.price,
                     title: mod.title,
                   };
@@ -157,7 +129,7 @@ export default component$<ShowProductModalProps>(({ showProductModal }) => {
                 </div>
                 <input
                   type="checkbox"
-                  name={item.name}
+                  name={item.description}
                   class="pointer-events-none h-4 w-4 "
                   onClick$={() => false}
                   // disabled={
@@ -224,3 +196,31 @@ export default component$<ShowProductModalProps>(({ showProductModal }) => {
     </Modal>
   );
 });
+
+// const productStore = useStore({
+//   name: "Chatu",
+//   price: 10,
+//   code: 33,
+//   categoryId: "3",
+//   description: "BLend of chatu and shit juice mixed with snot syrup",
+//   modifiers: [
+//     {
+//       name: "Size",
+//       shouldBeSelected: true,
+//       items: [
+//         { title: "Small", price: 33, isDefault: true },
+//         { title: "Medium", price: 60, isDefault: false },
+//         { title: "Large", price: 80, isDefault: false },
+//       ],
+//     },
+//     {
+//       name: "Cheese",
+//       shouldBeSelected: false,
+//       items: [
+//         { title: "plane", price: 33, isDefault: false },
+//         { title: "Think", price: 60, isDefault: false },
+//         { title: "Supreame", price: 80, isDefault: false },
+//       ],
+//     },
+//   ],
+// });

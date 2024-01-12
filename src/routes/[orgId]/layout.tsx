@@ -5,10 +5,8 @@ import {
   useContextProvider,
   useStore,
 } from "@builder.io/qwik";
-import Header from "~/components/shared/Header";
-import Navbar from "~/components/shared/Navbar";
-import { CartItem } from "~/types/cart_types";
-import { Product } from "~/types/product_types";
+import type { CartItem } from "~/types/cart_types";
+import type { Product } from "~/types/product_types";
 
 export interface Cart {
   cartItems: CartItem[];
@@ -28,9 +26,16 @@ export default component$(() => {
   const selectedProduct = useStore<{ product: Product }>({
     product: {
       name: "",
-      categoryId: "",
+      image: [],
+      indexInCategory: 0,
+      inStock: true,
+      modifierGroups: [],
+      popular: true,
+      printName: "",
+      secondaryLanguageName: "",
+      videoUrl: "",
       code: 0,
-      modifiers: [],
+
       price: 0,
       description: "",
     },

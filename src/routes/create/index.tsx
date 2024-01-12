@@ -1,6 +1,7 @@
 import { component$ } from "@builder.io/qwik";
 import { routeAction$, zod$, z, Form } from "@builder.io/qwik-city";
 import { PrismaClient } from "@prisma/client";
+import { useProductAddSeed } from "../admin/product/edit";
 
 export const useCreateUser = routeAction$(
   async (data) => {
@@ -17,6 +18,7 @@ export const useCreateUser = routeAction$(
 );
 
 export default component$(() => {
+  const seeData = useProductAddSeed();
   const createUserAction = useCreateUser();
   return (
     <section>
@@ -37,6 +39,11 @@ export default component$(() => {
           <h2>User created successfully!</h2>
         </div>
       )}
+      <section>
+        <Form>
+          <button type="submit">call submit</button>
+        </Form>
+      </section>
     </section>
   );
 });

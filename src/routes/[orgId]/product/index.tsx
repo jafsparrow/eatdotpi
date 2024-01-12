@@ -6,9 +6,7 @@ import ProductDetailsModal from "~/components/modal/ProductDetailsModal";
 import CategoryTitle from "~/components/product/CategoryTitle";
 import ProductCard from "~/components/product/ProductCard";
 import type { Company } from "~/types/company_typs";
-import { PrismaClient } from "@prisma/client";
 import { CartContext } from "../layout";
-import { products } from "~/utils/data/seed";
 import { db } from "~/lib/prima.client";
 
 export const useCompanyDetails = routeLoader$<Company>((requestEvent) => {
@@ -128,7 +126,7 @@ export default component$(() => {
         </button>
       )}
 
-      <Link href={"../../cart"}>
+      <Link href={"../cart"}>
         <div class="fixed right-1 top-2 h-8 w-8 bg-blue-800 text-white">
           <LuShoppingCart height="16" width="16" />
           <CartIcon />
