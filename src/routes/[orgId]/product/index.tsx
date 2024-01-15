@@ -8,6 +8,7 @@ import ProductCard from "~/components/product/ProductCard";
 import type { Company } from "~/types/company_typs";
 import { CartContext } from "../layout";
 import { db } from "~/lib/prima.client";
+import { sampleProduct } from "~/utils/data/single_product_sample";
 
 export const useCompanyDetails = routeLoader$<Company>((requestEvent) => {
   const company: Company = {
@@ -31,7 +32,7 @@ export const useCategoryViceProducts = routeLoader$(
     const categoryViceProduct = await db.category.findMany({
       where: { orgId },
     });
-
+    // console.log(JSON.stringify(categoryViceProduct));
     return categoryViceProduct;
   },
 );
@@ -76,8 +77,6 @@ export default component$(() => {
         />
       </div>
 
-      <ProductDetailsModal showProductModal={showProductSelectionModal} />
-
       <div class="divide-y">
         {categoryViceProducts.value.map((category, index) => (
           <div key={index} class="mb-6">
@@ -99,6 +98,13 @@ export default component$(() => {
         ))}
       </div>
 
+      {/* <div>
+        <ProductCard
+          onAddToCart={handleAddToCart}
+          product={sampleProduct}
+          onSelect={handleAddToCart}
+        />
+      </div> */}
       <div
         class={`fixed inset-x-0 bottom-1 mx-auto max-w-xl   origin-bottom divide-y rounded-t-lg border bg-gray-50 p-2 px-2 text-center duration-200 ${
           showSheet.value ? "scale-100" : "scale-0"
@@ -125,13 +131,14 @@ export default component$(() => {
           MENU
         </button>
       )}
-
-      <Link href={"../cart"}>
-        <div class="fixed right-1 top-2 h-8 w-8 bg-blue-800 text-white">
-          <LuShoppingCart height="16" width="16" />
-          <CartIcon />
-        </div>
-      </Link>
+      {/* 
+      {cartContext.cartItems.length && (
+        <Link href={"../cart"}>
+          <div class="fixed bottom-2 right-1 flex h-12 w-12 items-center justify-center rounded-full bg-blue-800 text-xl text-white shadow-md ">
+            <CartIcon />
+          </div>
+        </Link>
+      )} */}
     </div>
   );
 });

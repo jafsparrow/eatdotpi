@@ -130,16 +130,20 @@ export const useProductAddSeed = routeAction$(async (values) => {
             code: prod.code,
             printName: prod.printName,
             indexInCategory: 1,
-            modifierGroups: {
-              shouldBeSelected: true,
-              description: "Size Option",
+            modifierGroups: prod.variants.length
+              ? [
+                  {
+                    shouldBeSelected: true,
+                    description: "Size Option",
 
-              items: prod.variants.map((variant, index) => ({
-                title: variant.name,
-                price: variant.price,
-                isDefault: index == 0 ? true : false,
-              })),
-            },
+                    items: prod.variants.map((variant, index) => ({
+                      title: variant.name,
+                      price: variant.price,
+                      isDefault: index == 0 ? true : false,
+                    })),
+                  },
+                ]
+              : [],
           };
         }),
       };
@@ -163,7 +167,6 @@ export const useProductAddSeed = routeAction$(async (values) => {
 });
 export default component$(() => {
   const catProductsAction = useProductAddSeed();
-
   return (
     <div>
       hello

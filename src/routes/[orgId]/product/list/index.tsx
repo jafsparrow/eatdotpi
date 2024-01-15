@@ -16,6 +16,7 @@ import { Company } from "~/types/company_typs";
 import { CartContext } from "../../layout";
 import { PrismaClient } from "@prisma/client";
 import { db } from "~/lib/prima.client";
+import { sampleProduct } from "~/utils/data/single_product_sample";
 
 export const useCompanyDetails = routeLoader$<Company>((requestEvent) => {
   const company: Company = {
@@ -86,7 +87,15 @@ export default component$(() => {
       <ProductDetailsModal showProductModal={showProductSelectionModal} />
       <HomeCarousal />
 
-      <div class="divide-y">
+      <div>
+        <ProductCard
+          onAddToCart={handleAddToCart}
+          product={sampleProduct}
+          onSelect={handleAddToCart}
+        />
+      </div>
+
+      {/* <div class="divide-y">
         <div class="mb-6 ">
           <CategoryTitle title="Biriryani" />
 
@@ -101,7 +110,7 @@ export default component$(() => {
             ))}
           </div>
         </div>
-      </div>
+      </div> */}
 
       <div
         class={`fixed inset-x-0 bottom-1 mx-auto max-w-xl   origin-bottom divide-y rounded-t-lg border bg-gray-50 p-2 px-2 text-center duration-200 ${

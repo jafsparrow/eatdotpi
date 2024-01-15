@@ -106,8 +106,9 @@ type Modifier {
 }
 
 type Customer {
-  name  String
-  phone String
+  name    String
+  phone   String
+  address String
 }
 
 enum Status {

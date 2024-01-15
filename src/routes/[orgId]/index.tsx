@@ -1,5 +1,4 @@
 import { component$ } from "@builder.io/qwik";
-import { LuPlusSquare } from "@qwikest/icons/lucide";
 import CategoryTitle from "~/components/product/CategoryTitle";
 import PopularProductCard from "~/components/product/PopularProductCard";
 import Jumbotron from "~/components/shared/Jumbotron";

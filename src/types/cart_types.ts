@@ -5,7 +5,8 @@ export type Modifier = {
 };
 export type CartItem = {
   name: string;
+  image?: string;
   count: number;
   amount: number;
-  modifiers: Record<string, Modifier>;
+  modifiers?: Record<string, Modifier>;
 };

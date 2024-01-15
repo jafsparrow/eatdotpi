@@ -5,7 +5,7 @@ export type Product = {
   price: number;
   image: ProductImage[];
   inStock: boolean;
-  videoUrl: string;
+  videoUrl?: string;
   popular: boolean;
   printName: string;
   modifierGroups: ModifierGroup[];
@@ -14,17 +14,17 @@ export type Product = {
   createdAt?: Date;
 };
 
-type ModifierGroup = {
+export type ModifierGroup = {
   description: string;
   shouldBeSelected: boolean;
   items: Modifier[];
 };
-type ProductImage = {
+export type ProductImage = {
   storageName: string;
   downloadUrl: string;
 };
 
-type Modifier = {
+export type Modifier = {
   title: string;
   price: number;
   isDefault: boolean;

@@ -1,8 +1,5 @@
-import { component$, Slot, useStyles$ } from "@builder.io/qwik";
-import { routeLoader$ } from "@builder.io/qwik-city";
+import { component$, Slot } from "@builder.io/qwik";
 import type { RequestHandler } from "@builder.io/qwik-city";
-
-import styles from "./styles.css?inline";
 import Header from "~/components/shared/Header";
 
 export const onGet: RequestHandler = async ({ cacheControl }) => {
@@ -16,21 +13,15 @@ export const onGet: RequestHandler = async ({ cacheControl }) => {
   });
 };
 
-export const useServerTimeLoader = routeLoader$(() => {
-  return {
-    date: new Date().toISOString(),
-  };
-});
-
 export default component$(() => {
-  useStyles$(styles);
   return (
     <div class=" bg-gray-100">
-      <Header />
+      <header>
+        <Header />
+      </header>
       <main>
         <Slot />
       </main>
-      {/* <Footer /> */}
     </div>
   );
 });

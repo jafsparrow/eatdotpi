@@ -78,7 +78,15 @@ export default component$<ShowProductModalProps>(({ showProductModal }) => {
       isOpen={showProductModal.value}
     >
       <div q:slot="body">
-        <div>{JSON.stringify(cartItem)}</div>
+        {/* <div>{JSON.stringify(cartItem)}</div> */}
+
+        <div class="aspect-video w-full  overflow-hidden rounded-lg bg-gray-200">
+          <img
+            alt="product image"
+            src={product.image[3].downloadUrl}
+            class=" z-10  aspect-video w-full object-cover object-center"
+          />
+        </div>
         {product.modifierGroups.map((item, index) => (
           <div key={index}>
             <section class="flex justify-between border-b">
@@ -188,7 +196,11 @@ export default component$<ShowProductModalProps>(({ showProductModal }) => {
               class="rounded-lg bg-green-900 px-4 py-1 font-bold text-white hover:bg-green-700"
               onClick$={handleAddToCart$}
             >
-              ADD <span class="pr-3 font-thin"> {cartItem.amount} OMR</span>
+              ADD{" "}
+              <span class="pr-3 font-thin">
+                {" "}
+                {cartItem.amount.toFixed(3)} OMR
+              </span>
             </button>
           </div>
         </div>
