@@ -58,6 +58,7 @@
   },
   "dependencies": {
     "@modular-forms/qwik": "^0.22.0",
+    "@prisma/extension-accelerate": "^0.6.2",
     "@qwikest/icons": "^0.0.13",
     "mongodb": "^6.3.0",
     "pexels": "^1.4.0",

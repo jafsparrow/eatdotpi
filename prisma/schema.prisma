@@ -1,5 +1,6 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
+//  "mongodb+srv://jafar:12345@cluster0.y7xyc.mongodb.net/eatdotpi?retryWrites=true"
 
 generator client {
   provider = "prisma-client-js"
@@ -7,7 +8,7 @@ generator client {
 
 datasource db {
   provider = "mongodb"
-  url      = "mongodb+srv://jafar:12345@cluster0.y7xyc.mongodb.net/eatdotpi?retryWrites=true"
+  url      = "prisma://accelerate.prisma-data.net/?api_key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGlfa2V5IjoiMmRkMmRiY2QtZTQ0MS00MTE0LWFkYmQtOTg5ZDAxOWM4MGRiIiwidGVuYW50X2lkIjoiNDdjM2YxYjUxMWM0NmI3NzIyNTEwYjg3OTYzMTJjZjRkMDFjMGJiMDM3OTYyZjk5ZTM3OWRkOWRkZWM3OTY4NSIsImludGVybmFsX3NlY3JldCI6IjczN2Y5ODFkLTI0Y2QtNDIwMS04MDIwLWE4NjE4M2RiNzcyMyJ9.99YdspIQfehfg7bF0TCJLQXwVuZsHT8SVvQ-4b_hlN4"
 }
 
 model Organisation {
