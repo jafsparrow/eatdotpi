@@ -1,13 +1,4 @@
-import {
-  PropFunction,
-  QRL,
-  $,
-  QwikIntrinsicElements,
-  component$,
-  useSignal,
-  useTask$,
-  Slot,
-} from "@builder.io/qwik";
+import { QRL, $, component$, useSignal, Slot } from "@builder.io/qwik";
 import { LuXCircle } from "@qwikest/icons/lucide";
 
 interface ModalProps {
@@ -21,16 +12,7 @@ interface ModalProps {
   secondaryActionLabel?: string;
 }
 export default component$<ModalProps>(
-  ({
-    isOpen,
-    onClose,
-    onSubmit,
-    title,
-    actionLabel,
-    disabled,
-    secondaryAction,
-    secondaryActionLabel,
-  }) => {
+  ({ isOpen, onClose, title, disabled }) => {
     const showModal = useSignal(isOpen);
 
     const handleOnClose = $(() => {
@@ -45,25 +27,25 @@ export default component$<ModalProps>(
       }, 300);
     });
 
-    const handleSubmit$ = $(() => {
-      {
-        if (disabled) {
-          return;
-        }
+    // const handleSubmit$ = $(() => {
+    //   {
+    //     if (disabled) {
+    //       return;
+    //     }
 
-        onSubmit();
-      }
-    });
+    //     onSubmit();
+    //   }
+    // });
 
-    const handleSecondaryAction$ = $(() => {
-      {
-        if (disabled || !secondaryAction) {
-          return;
-        }
+    // const handleSecondaryAction$ = $(() => {
+    //   {
+    //     if (disabled || !secondaryAction) {
+    //       return;
+    //     }
 
-        secondaryAction();
-      }
-    });
+    //     secondaryAction();
+    //   }
+    // });
 
     if (!isOpen) {
       return null;

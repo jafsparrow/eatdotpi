@@ -1,5 +1,3 @@
-import type { CartItem } from "~/types/cart_types";
-
 // export const cartItems: CartItem[] = [
 //   {
 //     amount: 30,

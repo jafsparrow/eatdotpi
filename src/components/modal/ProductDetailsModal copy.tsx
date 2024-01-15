@@ -10,11 +10,7 @@ import Modal from "./Modal";
 
 import { LuMinus, LuPlus, LuTrash2 } from "@qwikest/icons/lucide";
 import type { CartItem } from "~/types/cart_types";
-import {
-  CartContext,
-  SelectedProductContext,
-  ShowProductSelectionModalContext,
-} from "~/routes/[orgId]/layout";
+import { CartContext, SelectedProductContext } from "~/routes/[orgId]/layout";
 
 export type ShowProductModalProps = {
   showProductModal: Signal<boolean>;

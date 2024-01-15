@@ -1,22 +1,13 @@
-import {
-  component$,
-  useSignal,
-  $,
-  useContext,
-  useTask$,
-} from "@builder.io/qwik";
-import { Link, routeLoader$ } from "@builder.io/qwik-city";
-import { LuShoppingCart } from "@qwikest/icons/lucide";
-import CartIcon from "~/components/cart/CartIcon";
-import ProductDetailsModal from "~/components/modal/ProductDetailsModal";
+import { component$, useSignal, $, useContext } from "@builder.io/qwik";
 import CategoryTitle from "~/components/product/CategoryTitle";
 import ProductCard from "~/components/product/ProductCard";
 import type { Company } from "~/types/company_typs";
-import { CartContext, ShowProductSelectionModalContext } from "../layout";
+import { ShowProductSelectionModalContext } from "../layout";
 import { db } from "~/lib/prima.client";
-import { sampleProduct } from "~/utils/data/single_product_sample";
+import { Product } from "~/types/product_types";
+import { routeLoader$ } from "@builder.io/qwik-city";
 
-export const useCompanyDetails = routeLoader$<Company>((requestEvent) => {
+export const useCompanyDetails = routeLoader$<Company>(() => {
   const company: Company = {
     name: "Dawar zadna",
     currencyCode: "OMR",
@@ -28,20 +19,18 @@ export const useCompanyDetails = routeLoader$<Company>((requestEvent) => {
   return company;
 });
 
-export const useCategoryViceProducts = routeLoader$(
-  async ({ params, error }) => {
-    const orgId = params.orgId;
-    // if (!orgId) {
-    //   return error(404, "Organisation Id is not recognised.");
-    // }
-    console.log("getting rpoduct");
-    const categoryViceProduct = await db.category.findMany({
-      where: { orgId },
-    });
-    // console.log(JSON.stringify(categoryViceProduct));
-    return categoryViceProduct;
-  },
-);
+export const useCategoryViceProducts = routeLoader$(async ({ params }) => {
+  const orgId = params.orgId;
+  // if (!orgId) {
+  //   return error(404, "Organisation Id is not recognised.");
+  // }
+  console.log("getting rpoduct");
+  const categoryViceProduct = await db.category.findMany({
+    where: { orgId },
+  });
+  // console.log(JSON.stringify(categoryViceProduct));
+  return categoryViceProduct;
+});
 
 // export const useOrganisation = routeLoader$(async ({ params, error }) => {
 //   const prisma = new PrismaClient();
@@ -60,18 +49,18 @@ export const useCategoryViceProducts = routeLoader$(
 
 export default component$(() => {
   const categoryViceProducts = useCategoryViceProducts();
-  const cartContext = useContext(CartContext);
+  // const cartContext = useContext(CartContext);
   const showProductSelectionModalContext = useContext(
     ShowProductSelectionModalContext,
   );
   const showSheet = useSignal(false);
-  const showModal = useSignal(false);
-  const showProductSelectionModal = useSignal(false);
+  // const showModal = useSignal(false);
+  // const showProductSelectionModal = useSignal(false);
 
-  const handleSome$ = $(() => {
-    console.log("hello");
-    showModal.value = false;
-  });
+  // const handleSome$ = $(() => {
+  //   console.log("hello");
+  //   showModal.value = false;
+  // });
 
   const handleAddToCart = $(() => {
     console.log("running it");
@@ -104,7 +93,7 @@ export default component$(() => {
               {category.products.map((val, index) => (
                 <ProductCard
                   onAddToCart={handleAddToCart}
-                  product={val}
+                  product={val as Product}
                   onSelect={handleAddToCart}
                   key={index}
                 />

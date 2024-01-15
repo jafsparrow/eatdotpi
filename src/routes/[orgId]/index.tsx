@@ -1,14 +1,11 @@
 import { component$ } from "@builder.io/qwik";
 import { routeLoader$ } from "@builder.io/qwik-city";
-import { Prisma } from "@prisma/client";
-import { ObjectId } from "mongodb";
 import CategoryTitle from "~/components/product/CategoryTitle";
 import PopularProductCard from "~/components/product/PopularProductCard";
 import Jumbotron from "~/components/shared/Jumbotron";
-import { db } from "~/lib/prima.client";
-import { Product } from "~/types/product_types";
+import type { Product } from "~/types/product_types";
 import { popularProducts } from "~/utils/data/popular.seed";
-export const usePopularProducts = routeLoader$<Product[]>(({ params }) => {
+export const usePopularProducts = routeLoader$<Product[]>(() => {
   return popularProducts;
 });
 

@@ -3,13 +3,10 @@ import {
   component$,
   createContextId,
   useContextProvider,
-  useSignal,
   useStore,
 } from "@builder.io/qwik";
-import { Link, routeLoader$ } from "@builder.io/qwik-city";
 import CartIcon from "~/components/cart/CartIcon";
 import ProductDetailsModal from "~/components/modal/ProductDetailsModal";
-import { db } from "~/lib/prima.client";
 import type { CartItem } from "~/types/cart_types";
 import type { Customer } from "~/types/customer_types";
 import type { Product } from "~/types/product_types";

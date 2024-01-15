@@ -1,24 +1,15 @@
-import {
-  component$,
-  useSignal,
-  $,
-  useStore,
-  useContext,
-} from "@builder.io/qwik";
+import { component$, useSignal, $, useContext } from "@builder.io/qwik";
 import { Link, routeLoader$ } from "@builder.io/qwik-city";
 import { LuShoppingCart } from "@qwikest/icons/lucide";
 import CartIcon from "~/components/cart/CartIcon";
-import ProductDetailsModal from "~/components/modal/ProductDetailsModal";
-import CategoryTitle from "~/components/product/CategoryTitle";
 import ProductCard from "~/components/product/ProductCard";
 import HomeCarousal from "~/components/promotion/HomeCarousal";
 import { Company } from "~/types/company_typs";
-import { CartContext, ShowProductSelectionModalContext } from "../../layout";
+import { ShowProductSelectionModalContext } from "../../layout";
 import { PrismaClient } from "@prisma/client";
-import { db } from "~/lib/prima.client";
 import { sampleProduct } from "~/utils/data/single_product_sample";
 
-export const useCompanyDetails = routeLoader$<Company>((requestEvent) => {
+export const useCompanyDetails = routeLoader$<Company>(() => {
   const company: Company = {
     name: "Dawar zadna",
     currencyCode: "OMR",
@@ -26,20 +17,22 @@ export const useCompanyDetails = routeLoader$<Company>((requestEvent) => {
     decimalPlaces: 3,
     license: "hello",
   };
+
+  return company;
 });
 
-export const useProductLists = routeLoader$(async ({ params, error }) => {
-  const orgId = params.orgId;
+// export const useProductLists = routeLoader$(async ({ params, error }) => {
+//   const orgId = params.orgId;
 
-  console.log("getting rpoduct");
-  const products = await db.product.findMany({
-    where: {
-      orgId,
-    },
-  });
+//   console.log("getting rpoduct");
+//   const products = await db.product.findMany({
+//     where: {
+//       orgId,
+//     },
+//   });
 
-  return products;
-});
+//   return products;
+// });
 
 export const useOrganisation = routeLoader$(async ({ params, error }) => {
   const prisma = new PrismaClient();
@@ -57,20 +50,19 @@ export const useOrganisation = routeLoader$(async ({ params, error }) => {
 });
 
 export default component$(() => {
-  const company = useCompanyDetails();
+  // const company = useCompanyDetails();
   const organisation = useOrganisation();
-  const products = useProductLists();
   const showSheet = useSignal(false);
-  const showModal = useSignal(false);
+  // const showModal = useSignal(false);
   const showProductSelectionModal = useContext(
     ShowProductSelectionModalContext,
   );
-  const cartContext = useContext(CartContext);
+  // const cartContext = useContext(CartContext);
 
-  const handleSome$ = $(() => {
-    console.log("hello");
-    showModal.value = false;
-  });
+  // const handleSome$ = $(() => {
+  //   console.log("hello");
+  //   showModal.value = false;
+  // });
 
   const handleAddToCart = $(() => {
     console.log("add to cart ddklajf");

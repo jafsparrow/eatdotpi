@@ -1,6 +1,5 @@
 import { component$ } from "@builder.io/qwik";
 import { Form, routeAction$ } from "@builder.io/qwik-city";
-import { Prisma } from "@prisma/client";
 import { db } from "~/lib/prima.client";
 import { categoryProduct } from "~/utils/data/categoryvise.seed";
 import { arabic } from "~/utils/data/image_scaping/arabic";
@@ -19,7 +18,7 @@ export const useProductAddSeed = routeAction$(async (values) => {
   const imageArray = [
     breakFast.results
       .map((item) => item.urls)
-      .map((urls, index) =>
+      .map((urls) =>
         Object.entries(urls).map(([key, val]) => ({
           storageName: key,
           downloadUrl: val,
@@ -28,7 +27,7 @@ export const useProductAddSeed = routeAction$(async (values) => {
 
     biriyani.results
       .map((item) => item.urls)
-      .map((urls, index) =>
+      .map((urls) =>
         Object.entries(urls).map(([key, val]) => ({
           storageName: key,
           downloadUrl: val,
@@ -36,7 +35,7 @@ export const useProductAddSeed = routeAction$(async (values) => {
       ),
     dum.results
       .map((item) => item.urls)
-      .map((urls, index) =>
+      .map((urls) =>
         Object.entries(urls).map(([key, val]) => ({
           storageName: key,
           downloadUrl: val,
@@ -44,7 +43,7 @@ export const useProductAddSeed = routeAction$(async (values) => {
       ),
     arabic.results
       .map((item) => item.urls)
-      .map((urls, index) =>
+      .map((urls) =>
         Object.entries(urls).map(([key, val]) => ({
           storageName: key,
           downloadUrl: val,
@@ -52,7 +51,7 @@ export const useProductAddSeed = routeAction$(async (values) => {
       ),
     indian.results
       .map((item) => item.urls)
-      .map((urls, index) =>
+      .map((urls) =>
         Object.entries(urls).map(([key, val]) => ({
           storageName: key,
           downloadUrl: val,
@@ -60,7 +59,7 @@ export const useProductAddSeed = routeAction$(async (values) => {
       ),
     rice.results
       .map((item) => item.urls)
-      .map((urls, index) =>
+      .map((urls) =>
         Object.entries(urls).map(([key, val]) => ({
           storageName: key,
           downloadUrl: val,
@@ -68,7 +67,7 @@ export const useProductAddSeed = routeAction$(async (values) => {
       ),
     chinese.results
       .map((item) => item.urls)
-      .map((urls, index) =>
+      .map((urls) =>
         Object.entries(urls).map(([key, val]) => ({
           storageName: key,
           downloadUrl: val,
@@ -76,7 +75,7 @@ export const useProductAddSeed = routeAction$(async (values) => {
       ),
     soupsS.results
       .map((item) => item.urls)
-      .map((urls, index) =>
+      .map((urls) =>
         Object.entries(urls).map(([key, val]) => ({
           storageName: key,
           downloadUrl: val,
@@ -84,7 +83,7 @@ export const useProductAddSeed = routeAction$(async (values) => {
       ),
     Sandwich.results
       .map((item) => item.urls)
-      .map((urls, index) =>
+      .map((urls) =>
         Object.entries(urls).map(([key, val]) => ({
           storageName: key,
           downloadUrl: val,
@@ -92,7 +91,7 @@ export const useProductAddSeed = routeAction$(async (values) => {
       ),
     juice.results
       .map((item) => item.urls)
-      .map((urls, index) =>
+      .map((urls) =>
         Object.entries(urls).map(([key, val]) => ({
           storageName: key,
           downloadUrl: val,
@@ -100,7 +99,7 @@ export const useProductAddSeed = routeAction$(async (values) => {
       ),
     burger.results
       .map((item) => item.urls)
-      .map((urls, index) =>
+      .map((urls) =>
         Object.entries(urls).map(([key, val]) => ({
           storageName: key,
           downloadUrl: val,

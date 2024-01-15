@@ -1,6 +1,6 @@
 export type Product = {
   name: string;
-  secondaryLanguageName: string;
+  secondaryLanguageName?: string;
   description: string;
   price: number;
   image: ProductImage[];

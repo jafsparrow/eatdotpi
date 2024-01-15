@@ -1,5 +1,4 @@
 import { component$ } from "@builder.io/qwik";
-import { LuPartyPopper } from "@qwikest/icons/lucide";
 
 export default component$<{ title: string }>(({ title }) => {
   return (
