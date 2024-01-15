@@ -16,11 +16,11 @@ import {
   ShowProductSelectionModalContext,
 } from "~/routes/[orgId]/layout";
 
-export default component$(() => {
+export type ShowProductModalProps = {
+  showProductModal: Signal<boolean>;
+};
+export default component$<ShowProductModalProps>(({ showProductModal }) => {
   const cartContext = useContext(CartContext);
-  const showProductSelectionModalContext = useContext(
-    ShowProductSelectionModalContext,
-  );
   const product = useContext(SelectedProductContext).product;
   const cartItem = useStore<CartItem>({
     name: "",
@@ -34,14 +34,13 @@ export default component$(() => {
     cartItem.amount = 0;
     cartItem.modifiers = {};
 
-    showProductSelectionModalContext.show = false;
+    showProductModal.value = false;
   });
   useTask$(({ track }) => {
     const trackedProduct = track(() => product);
     cartItem.name = trackedProduct.name;
     cartItem.amount = trackedProduct.price;
     cartItem.count = 1;
-    cartItem.image = trackedProduct.image[4]?.downloadUrl;
     trackedProduct.modifierGroups.forEach((modifier, index) => {
       modifier.items.forEach((mod) => {
         if (mod.isDefault) {
@@ -69,9 +68,9 @@ export default component$(() => {
 
   const handle$ = $(() => {
     console.log("hndle me");
-    showProductSelectionModalContext.show = false;
+    showProductModal.value = false;
   });
-  if (!showProductSelectionModalContext.show) {
+  if (!showProductModal.value) {
     return null;
   }
   return (
@@ -80,7 +79,7 @@ export default component$(() => {
       title={product.name}
       onClose={handle$}
       onSubmit={handle$}
-      isOpen={showProductSelectionModalContext.show}
+      isOpen={showProductModal.value}
     >
       <div q:slot="body">
         {/* <div>{JSON.stringify(cartItem)}</div> */}

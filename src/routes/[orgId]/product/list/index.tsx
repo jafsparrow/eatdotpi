@@ -13,7 +13,7 @@ import CategoryTitle from "~/components/product/CategoryTitle";
 import ProductCard from "~/components/product/ProductCard";
 import HomeCarousal from "~/components/promotion/HomeCarousal";
 import { Company } from "~/types/company_typs";
-import { CartContext } from "../../layout";
+import { CartContext, ShowProductSelectionModalContext } from "../../layout";
 import { PrismaClient } from "@prisma/client";
 import { db } from "~/lib/prima.client";
 import { sampleProduct } from "~/utils/data/single_product_sample";
@@ -62,7 +62,9 @@ export default component$(() => {
   const products = useProductLists();
   const showSheet = useSignal(false);
   const showModal = useSignal(false);
-  const showProductSelectionModal = useSignal(true);
+  const showProductSelectionModal = useContext(
+    ShowProductSelectionModalContext,
+  );
   const cartContext = useContext(CartContext);
 
   const handleSome$ = $(() => {
@@ -71,7 +73,8 @@ export default component$(() => {
   });
 
   const handleAddToCart = $(() => {
-    showProductSelectionModal.value = true;
+    console.log("add to cart ddklajf");
+    showProductSelectionModal.show = true;
   });
   return (
     <div>
@@ -84,7 +87,7 @@ export default component$(() => {
       </div>
 
       <div>{JSON.stringify(organisation.value)}</div>
-      <ProductDetailsModal showProductModal={showProductSelectionModal} />
+      {/* <ProductDetailsModal showProductModal={showProductSelectionModal} /> */}
       <HomeCarousal />
 
       <div>

@@ -1,4 +1,10 @@
-import { component$, useSignal, $, useContext } from "@builder.io/qwik";
+import {
+  component$,
+  useSignal,
+  $,
+  useContext,
+  useTask$,
+} from "@builder.io/qwik";
 import { Link, routeLoader$ } from "@builder.io/qwik-city";
 import { LuShoppingCart } from "@qwikest/icons/lucide";
 import CartIcon from "~/components/cart/CartIcon";
@@ -6,7 +12,7 @@ import ProductDetailsModal from "~/components/modal/ProductDetailsModal";
 import CategoryTitle from "~/components/product/CategoryTitle";
 import ProductCard from "~/components/product/ProductCard";
 import type { Company } from "~/types/company_typs";
-import { CartContext } from "../layout";
+import { CartContext, ShowProductSelectionModalContext } from "../layout";
 import { db } from "~/lib/prima.client";
 import { sampleProduct } from "~/utils/data/single_product_sample";
 
@@ -55,6 +61,9 @@ export const useCategoryViceProducts = routeLoader$(
 export default component$(() => {
   const categoryViceProducts = useCategoryViceProducts();
   const cartContext = useContext(CartContext);
+  const showProductSelectionModalContext = useContext(
+    ShowProductSelectionModalContext,
+  );
   const showSheet = useSignal(false);
   const showModal = useSignal(false);
   const showProductSelectionModal = useSignal(false);
@@ -65,8 +74,12 @@ export default component$(() => {
   });
 
   const handleAddToCart = $(() => {
-    showProductSelectionModal.value = true;
+    console.log("running it");
+    showProductSelectionModalContext.show = true;
+
+    console.log(categoryViceProducts.value);
   });
+
   return (
     <div class="px-2">
       <div class="mx-auto max-w-lg py-2 text-center">
@@ -75,6 +88,9 @@ export default component$(() => {
           class="w-full rounded-md border px-2 py-2"
           placeholder="Search product here"
         />
+      </div>
+      <div>
+        context value is {JSON.stringify(showProductSelectionModalContext.show)}
       </div>
 
       <div class="divide-y">

@@ -2,6 +2,7 @@ import { $, component$, useContext, useStore } from "@builder.io/qwik";
 import { routeAction$ } from "@builder.io/qwik-city";
 import { BsWhatsapp } from "@qwikest/icons/bootstrap";
 import { CartContext } from "../layout";
+import CartItem from "~/components/cart/CartItem";
 
 export const useCreateOrderAction = routeAction$(() => {
   return "success";
@@ -34,7 +35,7 @@ export default component$(() => {
   if (!cart.cartItems.length) {
     return (
       <div class="flex h-56 w-full items-center justify-center text-xl font-bold">
-        No Item in the cart{" "}
+        No Item in the cart
       </div>
     );
   }
@@ -44,54 +45,7 @@ export default component$(() => {
       <div class="font-bold">Cart </div>
       <div class="grid grid-cols-1 gap-2 py-2">
         {cart.cartItems.map((item, key) => (
-          <div key={key} class="rounded-lg bg-white p-2">
-            <div class="flex gap-2 md:gap-4">
-              <div class="aspect-square w-20 overflow-hidden rounded-md">
-                <img
-                  src={item.image}
-                  alt=""
-                  width={80}
-                  height={80}
-                  class=" aspect-square rounded-md object-cover object-center"
-                />
-              </div>
-              <div class="flex-1">
-                <div class="flex justify-between">
-                  <div>{item.name}</div>
-                  <div class="font-bold">{item.amount} OMR</div>
-                </div>
-                {item.modifiers && (
-                  <div class="flex gap-2 space-x-1 divide-x font-light">
-                    {Object.values(item.modifiers).map((item, indexx) => (
-                      <span key={indexx} class="">
-                        {item.title}
-                      </span>
-                    ))}
-                  </div>
-                )}
-
-                <div class="mt-2 flex items-center gap-3">
-                  <button
-                    class="flex h-8 w-8 flex-row items-center justify-center  rounded-full bg-gray-600 font-semibold text-white hover:bg-gray-900"
-                    onClick$={() =>
-                      item.count == 1
-                        ? cart.cartItems.splice(key, 1)
-                        : (item.count = item.count - 1)
-                    }
-                  >
-                    -
-                  </button>
-                  <div class="font-bold">{item.count}</div>
-                  <button
-                    class="flex h-8 w-8 flex-row items-center justify-center  rounded-full bg-gray-600 font-semibold text-white hover:bg-gray-900"
-                    onClick$={() => (item.count = item.count + 1)}
-                  >
-                    +
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
+          <CartItem key={key} cartItem={item} carItemIndex={key} />
         ))}
       </div>
       {/* {cart.cartItems.map((item, index) => (

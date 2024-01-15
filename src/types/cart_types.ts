@@ -8,5 +8,5 @@ export type CartItem = {
   image?: string;
   count: number;
   amount: number;
-  modifiers?: Record<string, Modifier>;
+  modifiers: Record<string, Modifier>;
 };

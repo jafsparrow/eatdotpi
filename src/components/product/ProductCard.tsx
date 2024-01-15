@@ -13,6 +13,7 @@ export default component$<ProductCardProps>(
 
     const handleAddToCart$ = $(() => {
       selectedProductContext.product = product;
+      console.log("inside productCard handlecart button");
       onAddToCart();
     });
     return (
