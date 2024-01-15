@@ -8,7 +8,6 @@
   "trustedDependencies": [
     "sharp"
   ],
-
   "type": "module",
   "scripts": {
     "build": "qwik build",
