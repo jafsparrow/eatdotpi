@@ -70,8 +70,8 @@ export default component$(() => {
   });
 
   return (
-    <div class="px-2">
-      <div class="mx-auto max-w-lg py-2 text-center">
+    <div class="mb-4 px-2">
+      {/* <div class="mx-auto max-w-lg py-2 text-center">
         <input
           type="text"
           class="w-full rounded-md border px-2 py-2"
@@ -80,7 +80,7 @@ export default component$(() => {
       </div>
       <div>
         context value is {JSON.stringify(showProductSelectionModalContext.show)}
-      </div>
+      </div> */}
 
       <div class="divide-y">
         {categoryViceProducts.value.map((category, index) => (

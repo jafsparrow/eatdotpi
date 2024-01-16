@@ -14,8 +14,7 @@ export default component$(() => {
   return (
     <>
       <Jumbotron />
-      {/* <dir>{JSON.stringify(popularProducts.value)}</dir> */}
-      <div class="p-2 sm:p-4">
+      <div class="mb-12 p-2 sm:p-4">
         <CategoryTitle title="Popular Items" />
         <div class="mt-4 grid  grid-cols-2 gap-2 pb-2 sm:grid-cols-3 sm:gap-4 md:grid-cols-4">
           {popularProducts.value.map((item, index) => (

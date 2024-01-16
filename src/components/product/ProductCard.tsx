@@ -42,7 +42,7 @@ export default component$<ProductCardProps>(({ product, onAddToCart }) => {
           >
             add
           </button>
-          <button class="rounded-lg border px-3 py-1">view</button>
+          {/* <button class="rounded-lg border px-3 py-1">view</button> */}
         </div>
       </div>
     </div>

@@ -32,7 +32,10 @@ export default component$<PropularProductProsp>(({ product }) => {
         <p class="font-thin">A delicacy mized with</p>
         <div class="flex justify-between">
           <p>{product.price}</p>
-          <button class="text-gray-900 " onClick$={handleAdd}>
+          <button
+            class="rounded-lg bg-gray-300 p-1 text-gray-900"
+            onClick$={handleAdd}
+          >
             <LuPlusSquare />
           </button>
         </div>
