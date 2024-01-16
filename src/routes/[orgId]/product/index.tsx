@@ -27,7 +27,6 @@ export const useCategoryViceProducts = routeLoader$(async ({ params }) => {
   console.log("getting rpoduct");
   const categoryViceProduct = await db.category.findMany({
     where: { orgId },
-    cacheStrategy: { ttl: 60 },
   });
   // console.log(JSON.stringify(categoryViceProduct));
   return categoryViceProduct;
