@@ -1,36 +1,32 @@
-import { $, component$, useContext } from "@builder.io/qwik";
+import { component$, useContext, $ } from "@builder.io/qwik";
 import { Link, routeAction$, useLocation } from "@builder.io/qwik-city";
-
 import twil from "twilio";
 import { BsWhatsapp } from "@qwikest/icons/bootstrap";
+
 import { CartContext } from "../layout";
 import CartItem from "~/components/cart/CartItem";
-
-export const useCreateOrderAction = routeAction$(async (values) => {
-  console.log(values);
+export const useCreateOrderAction = routeAction$(async (data, requestEvent) => {
+  console.log(requestEvent);
   const twilioClient = twil(
     "AC9b2395f1f5c188d71c53dc488067b951",
     "e86d78b2051007b5b0c830d502093cc7",
   );
-  const cartItem = values.cartItems as any[];
-  const carItemsString = (values.cartItems as any[]).map(
-    (item, key) => `${key + 1}%20${item.name}%20`,
-  );
+  const cartItem = data.cartItems as any[];
 
   const messageBody = `
   Hello Dawar Zadana
   
-  There is a new Order from ${(values.customer as any).name} 
+  There is a new Order from ${(data.customer as any)?.name} 
    ----------------------
    ${cartItem.map(
-     (cartItem, index) => `${index + 1} . ${cartItem.name} x ${cartItem.count}
+     (cartItem, index) => `${index + 1} . ${cartItem?.name} x ${cartItem.count}
    `,
    )}
    --------------------
    `;
   const encodedMessageValueToHost = encodeURI(messageBody);
-  const twilioMessageToHost = `https://wa.me/+968${(values.customer as any).phone}?text=${encodedMessageValueToHost}`;
-
+  const twilioMessageToHost = `https://wa.me/+968${(data.customer as any).phone}?text=${encodedMessageValueToHost}`;
+  console.log(twilioMessageToHost);
   try {
     await twilioClient.messages.create({
       body: messageBody,
@@ -40,7 +36,7 @@ export const useCreateOrderAction = routeAction$(async (values) => {
   } catch (error) {
     console.log(error);
   }
-  return twilioMessageToHost;
+  return { message: "twilioMessageToHost" };
 });
 export default component$(() => {
   const cart = useContext(CartContext);
@@ -71,6 +67,8 @@ export default component$(() => {
   if (!cart.cartItems.length) {
     return (
       <div class="flex h-56 w-full items-center justify-center text-xl font-bold">
+        {JSON.stringify(CartItem)}
+        {JSON.stringify($)}
         <div class="text-center">
           <div>No Item in the cart</div>
 
@@ -85,24 +83,14 @@ export default component$(() => {
   }
   return (
     <div class="mx-auto max-w-md ">
-      {/* <div>{JSON.stringify(cart)}</div> */}
+      <div>{JSON.stringify(cart)}</div>
       <div class="font-bold">Cart </div>
       <div class="grid grid-cols-1 gap-2 py-2">
         {cart.cartItems.map((item, key) => (
           <CartItem key={key} cartItem={item} carItemIndex={key} />
         ))}
       </div>
-      {/* {cart.cartItems.map((item, index) => (
-          <div key={index}>
-            <div>{item.name}</div>
-            {Object.values(item.modifiers).map((mod, mIndex) => (
-              <div key={mIndex}>
-                <span>{mod.name} ,</span>
-                <span>{mod.title} ,</span>
-              </div>
-            ))}
-          </div>
-        ))} */}
+
       <div class="mt-4 rounded-lg bg-white py-3">
         <div class="text-center text-lg font-semibold ">
           Let us reach you on..!
@@ -126,7 +114,10 @@ export default component$(() => {
               id="website-admin"
               class="block w-full min-w-0 flex-1 rounded-none rounded-e-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500  dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
               placeholder="What is you name"
-              onInput$={$((event, val) => (cart.customer.name = val.value))}
+              onInput$={$(
+                (event: any, val: { value: string }) =>
+                  (cart.customer.name = val.value),
+              )}
               required
             />
           </div>
@@ -169,11 +160,11 @@ export default component$(() => {
               <button
                 class="w-full rounded-lg bg-gray-900 px-4 py-2 font-bold text-white disabled:bg-gray-600 disabled:text-gray-400"
                 disabled={
-                  cart.customer.name == "" ||
-                  cart.customer.phone == "" ||
+                  cart.customer["name"] == "" ||
+                  cart.customer["phone"] == "" ||
                   action.isRunning
                 }
-                onClick$={() => action.submit({ ...cart })}
+                onClick$={async () => await action.submit({ ...cart })}
               >
                 Place Order
               </button>

@@ -144,3 +144,7 @@ npm run serve
 ```
 
 Then visit [http://localhost:8080/](http://localhost:8080/)
+
+NOTES
+
+- routeactions should alwasy return an object to get the build successfull.. If any other datatype returns build would fail and would say cannot read name of undefined and build would fail.

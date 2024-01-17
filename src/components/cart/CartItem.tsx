@@ -1,6 +1,6 @@
 import { $, component$, useContext } from "@builder.io/qwik";
 import { CartContext } from "~/routes/[orgId]/layout";
-import { CartItem } from "~/types/cart_types";
+import type { CartItem } from "~/types/cart_types";
 
 type CartItemProp = {
   cartItem: CartItem;
@@ -40,6 +40,7 @@ export default component$<CartItemProp>(({ cartItem, carItemIndex }) => {
             <div>{cartItem.name}</div>
             <div class="font-bold">{cartItem.amount.toFixed(3)} OMR</div>
           </div>
+
           {cartItem.modifiers && (
             <div class="flex gap-2 space-x-1 divide-x font-light">
               {Object.values(cartItem.modifiers).map((item, indexx) => (
@@ -49,7 +50,6 @@ export default component$<CartItemProp>(({ cartItem, carItemIndex }) => {
               ))}
             </div>
           )}
-
           <div class="mt-2 flex items-center gap-3">
             <button
               class="flex h-8 w-8 flex-row items-center justify-center  rounded-full bg-gray-600 font-semibold text-white hover:bg-gray-900"

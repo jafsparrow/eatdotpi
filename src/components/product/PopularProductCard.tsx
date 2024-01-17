@@ -4,7 +4,7 @@ import {
   SelectedProductContext,
   ShowProductSelectionModalContext,
 } from "~/routes/[orgId]/layout";
-import { Product } from "~/types/product_types";
+import type { Product } from "~/types/product_types";
 type PropularProductProsp = {
   product: Product;
 };
