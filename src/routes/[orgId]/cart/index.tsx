@@ -9,7 +9,7 @@ export const useCreateOrderAction = routeAction$(async (data, requestEvent) => {
   console.log(requestEvent);
   const twilioClient = twil(
     "AC9b2395f1f5c188d71c53dc488067b951",
-    "e86d78b2051007b5b0c830d502093cc7",
+    "2f4e37a790a830d9dba6c9f28c80206d",
   );
   const cartItem = data.cartItems as any[];
 
@@ -45,7 +45,7 @@ export default component$(() => {
 
   if (action.status == 200) {
     return (
-      <div class="flex h-56 items-center justify-center ">
+      <div class="flex h-60 items-center justify-center ">
         {/* stat is {action.status}
           <div>{JSON.stringify(action.value)}</div> */}
 
@@ -53,11 +53,22 @@ export default component$(() => {
           Your order has been placed successfully.{" "}
           <p>Click below to confirm delivery on watsap</p>
           <div class="mt-4 flex w-full justify-center">
-            <button class=" flex h-12 w-12 items-center justify-center rounded-full bg-green-600 p-2  text-2xl text-white hover:bg-green-800">
-              <a href={`${action.value}`}>
+            <a
+              href={`${action.value}`}
+              class="flex rounded-lg border bg-gray-200 p-1 shadow-sm"
+            >
+              Send your order on{" "}
+              <span class="ml-2 flex h-12 w-12 items-center justify-center rounded-full bg-green-600 p-2  text-2xl text-white hover:bg-green-800">
                 <BsWhatsapp />
-              </a>
-            </button>
+              </span>
+            </a>
+          </div>
+          <div class="mt-5 min-w-max">
+            <Link href={`/${location.params["orgId"]}/product`}>
+              <div class="mt-3 rounded-lg border bg-white px-3 py-2 text-base shadow-md hover:bg-gray-200">
+                View Menu
+              </div>
+            </Link>
           </div>
         </div>
       </div>
@@ -67,23 +78,22 @@ export default component$(() => {
   if (!cart.cartItems.length) {
     return (
       <div class="flex h-56 w-full items-center justify-center text-xl font-bold">
-        {JSON.stringify(CartItem)}
-        {JSON.stringify($)}
         <div class="text-center">
           <div>No Item in the cart</div>
 
-          <Link href={`/${location.params["orgId"]}/product`}>
-            <button class="mt-3 rounded-lg border bg-white px-3 py-2 text-base shadow-md hover:bg-gray-200">
-              View Menu
-            </button>
-          </Link>
+          <div class="mt-5 min-w-max">
+            <Link href={`/${location.params["orgId"]}/product`}>
+              <div class="mt-3 rounded-lg border bg-white px-3 py-2 text-base shadow-md hover:bg-gray-200">
+                View Menu
+              </div>
+            </Link>
+          </div>
         </div>
       </div>
     );
   }
   return (
     <div class="mx-auto max-w-md ">
-      <div>{JSON.stringify(cart)}</div>
       <div class="font-bold">Cart </div>
       <div class="grid grid-cols-1 gap-2 py-2">
         {cart.cartItems.map((item, key) => (
