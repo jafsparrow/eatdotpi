@@ -4,7 +4,6 @@ import {
   useStore,
   useTask$,
   useContext,
-  useVisibleTask$,
 } from "@builder.io/qwik";
 import Modal from "./Modal";
 

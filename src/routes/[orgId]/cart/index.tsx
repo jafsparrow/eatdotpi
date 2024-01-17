@@ -25,7 +25,7 @@ export const useCreateOrderAction = routeAction$(async (data, requestEvent) => {
    --------------------
    `;
   const encodedMessageValueToHost = encodeURI(messageBody);
-  const twilioMessageToHost = `https://wa.me/+968${(data.customer as any).phone}?text=${encodedMessageValueToHost}`;
+  const twilioMessageToHost = `https://wa.me/+96879423170?text=${encodedMessageValueToHost}`;
   console.log(twilioMessageToHost);
   try {
     await twilioClient.messages.create({
@@ -36,7 +36,7 @@ export const useCreateOrderAction = routeAction$(async (data, requestEvent) => {
   } catch (error) {
     console.log(error);
   }
-  return { message: "twilioMessageToHost" };
+  return { message: twilioMessageToHost };
 });
 export default component$(() => {
   const cart = useContext(CartContext);
@@ -54,7 +54,7 @@ export default component$(() => {
           <p>Click below to confirm delivery on watsap</p>
           <div class="mt-4 flex w-full justify-center">
             <a
-              href={`${action.value}`}
+              href={`${action.value?.message}`}
               class="flex rounded-lg border bg-gray-200 p-1 shadow-sm"
             >
               Send your order on{" "}

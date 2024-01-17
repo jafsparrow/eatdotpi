@@ -27,7 +27,7 @@ export default component$(() => {
         <div class="flex   flex-row space-x-4 sm:justify-center sm:space-y-0">
           <Link
             href="product"
-            class="inline-flex items-center justify-center rounded-lg bg-blue-700 px-3 py-1 text-center text-base font-medium text-white hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900 sm:px-5 sm:py-3"
+            class={`inline-flex items-center justify-center rounded-lg bg-blue-700 px-3 py-1 text-center text-base font-medium text-white hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900 sm:px-5 sm:py-3`}
           >
             View Menu
             <svg
