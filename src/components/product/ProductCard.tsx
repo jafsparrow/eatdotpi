@@ -11,7 +11,7 @@ export default component$<ProductCardProps>(({ product, onAddToCart }) => {
   const selectedProductContext = useContext(SelectedProductContext);
 
   const handleAddToCart$ = $(() => {
-    selectedProductContext.product = product;
+    selectedProductContext.product = { ...product };
     console.log("inside productCard handlecart button");
     onAddToCart();
   });

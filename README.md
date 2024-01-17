@@ -148,3 +148,5 @@ Then visit [http://localhost:8080/](http://localhost:8080/)
 NOTES
 
 - routeactions should alwasy return an object to get the build successfull.. If any other datatype returns build would fail and would say cannot read name of undefined and build would fail.
+
+- visible task or just task would run only when the tracked item changes. but in my case if I choose same product from the menu and set the selected product context, if i choose the same product after choosing the same, the reactivity of the store => usetask would not work as there is no change to the store. TO solve this issue, one musct the replace the product by cloning it so that everytime store feels like having new product even thought the same as exist in the store has been added again.

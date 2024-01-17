@@ -4,6 +4,7 @@ import {
   useStore,
   useTask$,
   useContext,
+  useVisibleTask$,
 } from "@builder.io/qwik";
 import Modal from "./Modal";
 
@@ -35,8 +36,10 @@ export default component$(() => {
 
     showProductSelectionModalContext.show = false;
   });
+
   useTask$(({ track }) => {
     const trackedProduct = track(() => product);
+    console.log("selection modal task dollar");
     cartItem.name = trackedProduct.name;
     cartItem.amount = trackedProduct.price;
     cartItem.count = 1;
@@ -73,6 +76,7 @@ export default component$(() => {
   if (!showProductSelectionModalContext.show) {
     return null;
   }
+
   return (
     <Modal
       actionLabel="show prod"
